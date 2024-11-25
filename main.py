@@ -54,11 +54,10 @@ def server_info():
     try:
         cursor = connection.cursor()
         # cursor.execute("CREATE TABLE mytest (id INTEGER PRIMARY KEY)")
-        cursor.execute("INSERT INTO `linuxobserver`.`SERVER_spec` (`physical_cores`,"
-                       "`logical_cores`,`max_cpu_clock`,`alert_temp_cpu`,`ram_capacity`,"
-                       "`max_disc_capacity`,`max_IO_num`,`server_start_date`) "
-                       "VALUES (?,?,?,?,?,?,?,?)", physical_cores, cores, cpu_freq_max.max, 105,
-                       ram_capacity, disc_usage, 0, boot_time)
+        insert = (f"INSERT INTO `linuxobserver`.`SERVER_spec` (`physical_cores`,`logical_cores`,`max_cpu_clock`,"
+                  f"`alert_temp_cpu`,`ram_capacity`,`max_disc_capacity`,`max_IO_num`,`server_start_date`) VALUES "
+                  f"({physical_cores}, {cores}, {cpu_freq_max.max}, 105 ,{ram_capacity}, {disc_usage}, 0, {boot_time})")
+        cursor.execute(insert)
         # cursor.execute("SELECT * FROM mytest")
         # print(cursor.fetchall())
     finally:
@@ -115,4 +114,3 @@ def server_status():
 if __name__ == '__main__':
     server_info()
     server_status()
-    #data_base()
